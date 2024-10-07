@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * Ivanna Giordano
  * CEN 3024C - Software Development 1
- * September 8, 2024
+ * October 6, 2024
  * Library.java
  * This class manages a collection of books in a library, allowing for adding, removing, 
- * listing, and loading books from a file, as well as saving the collection to a file.
+ * listing, and loading books from a file, as well as saving the collection to a file. Now newly adding to check out book and check in book. 
  */
 public class Library {
     private List<Book> books;
@@ -118,6 +118,41 @@ public class Library {
         }
     }
 
+    public void removeBookByTitle(String title) {
+        Iterator<Book> iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                iterator.remove();
+                System.out.println("Book titled '" + title + "' removed.");
+                saveBooksToFile("books.txt");
+                return;
+            }
+        }
+        System.out.println("Book titled '" + title + "' not found.");
+    }
+    
+    public void checkOutBook(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                book.checkOut();
+                saveBooksToFile("books.txt");
+                return;
+            }
+        }
+        System.out.println("Book titled '" + title + "' not found.");
+    }
+    
+    public void checkInBook(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                book.checkIn();
+                saveBooksToFile("books.txt");
+                return;
+            }
+        }
+        System.out.println("Book titled '" + title + "' not found.");
+    }   
     /**
      * method: addBookManually
      * parameters: int id, String title, String author
